@@ -1,0 +1,42 @@
+.nav {
+    display: flex;
+    position: fixed;
+    align-items: center;
+    padding: 10px 30px;
+    color: white;
+    width: 95%;
+    z-index: 300;
+    justify-content: space-between;
+    backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, 0.071);
+}
+
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.login a {
+    color: white;
+    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.login button{
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    background-color: rgb(15, 15, 15);
+    transition: 0.5s;
+}
+
+.login button:hover{
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    transform: scale(1.1);
+}

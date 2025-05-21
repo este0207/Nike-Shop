@@ -1,0 +1,9 @@
+<div class="container">
+    @for (product of products(); track product.id) {
+        <app-card 
+            [title]="product.name"
+            [price]="product.price + '€'"
+            [cardbg]="product.imageUrl">
+        </app-card>
+    }
+</div>

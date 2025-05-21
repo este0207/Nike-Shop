@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Karantina:wght@700&display=swap');
+h2{
+    font-family: "Karantina", system-ui;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 50px;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}

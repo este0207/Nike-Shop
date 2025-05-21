@@ -1,0 +1,48 @@
+<div class="form-container">
+    <form (ngSubmit)="onSubmit()" class="form">
+      <h2>LOGIN</h2>
+      
+      <div class="form-group">
+        <label for="Name">Name</label>
+        <input 
+          type="text" 
+          id="Name"
+          name="Name"
+          required
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="Lastname">Lastname</label>
+        <input 
+          type="text" 
+          id="Lastname"
+          name="Lastname"
+          required
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email"
+          name="email"
+          required
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="Password">Password</label>
+        <input 
+          type="Password" 
+          id="Password"
+          name="Password"
+          required
+          class="form-control">
+      </div>
+  
+      <div class="form-actions">
+        <button type="button" class="submit-btn" (click)="showForm()">Envoyer la suggestion</button>
+        <button type="button" (click)="resetForm()" class="reset-btn">Réinitialiser</button>
+      </div>
+    </form>
+  </div>
+  

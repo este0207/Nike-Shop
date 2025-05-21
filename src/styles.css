@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Karantina:wght@700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid red; */
+}
+
+body{
+    font-family: "Karantina", system-ui;
+    font-weight: 700;
+    font-style: normal;
+    background-image: url("/bg.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+    /* overflow-y: hidden; */
+    padding-bottom: 10%;
+}
