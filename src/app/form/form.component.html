@@ -1,13 +1,13 @@
 <div class="form-container">
-    <form (ngSubmit)="onSubmit()" class="form">
+    <form (ngSubmit)="onSubmit($event)" #loginForm="ngForm" class="form">
       <h2>LOGIN</h2>
-      
       <div class="form-group">
         <label for="Name">Name</label>
         <input 
           type="text" 
           id="Name"
           name="Name"
+          [(ngModel)]="Loginform.Name"
           required
           class="form-control">
       </div>
@@ -17,6 +17,7 @@
           type="text" 
           id="Lastname"
           name="Lastname"
+          [(ngModel)]="Loginform.Lastname"
           required
           class="form-control">
       </div>
@@ -26,21 +27,23 @@
           type="email" 
           id="email"
           name="email"
+          [(ngModel)]="Loginform.email"
           required
           class="form-control">
       </div>
       <div class="form-group">
         <label for="Password">Password</label>
         <input 
-          type="Password" 
+          type="password" 
           id="Password"
           name="Password"
+          [(ngModel)]="Loginform.Password"
           required
           class="form-control">
       </div>
   
       <div class="form-actions">
-        <button type="button" class="submit-btn" (click)="showForm()">Envoyer la suggestion</button>
+        <button type="submit" class="submit-btn">Se connecter</button>
         <button type="button" (click)="resetForm()" class="reset-btn">Réinitialiser</button>
       </div>
     </form>

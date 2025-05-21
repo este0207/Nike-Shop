@@ -40,3 +40,9 @@
     color: black;
     transform: scale(1.1);
 }
+
+@media (max-width:679px){
+    .nav{
+        width: 80%;
+    }
+}

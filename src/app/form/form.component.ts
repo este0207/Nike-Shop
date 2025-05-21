@@ -1,34 +1,39 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
 export class FormComponent {
   Loginform = {
+    Name: '',
+    Lastname: '',
+    email: '',
+    Password: '',
+  };
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    console.log('Formulaire soumis:', this.Loginform);
+    // Stockage des données dans localStorage
+    localStorage.setItem("form", JSON.stringify(this.Loginform));
+  }
+    
+  resetForm() {
+    this.Loginform = {
       Name: '',
       Lastname: '',
       email: '',
       Password: '',
     };
+    // Effacer les données du localStorage lors de la réinitialisation
+    localStorage.removeItem("form");
+  }
 
-    onSubmit() {
-      console.log('Suggestion soumise:', this.Loginform);
-      // Ici, vous pourriez ajouter la logique pour envoyer les données à un backend
-    }
-
-    resetForm() {
-      this.Loginform = {
-        Name: '',
-        Lastname: '',
-        email: '',
-        Password: '',
-      };
-    }
-
-    showForm(){
-      console.log('Suggestion soumise:', this.Loginform);
-    }
+  showForm() {
+    console.log('État actuel du formulaire:', this.Loginform);
+  }
 }
