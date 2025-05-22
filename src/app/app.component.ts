@@ -1,23 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from "./navbar/navbar.component";
-import { HomeComponent } from "./home/home.component";
-import { CardContainerComponent } from "./card-container/card-container.component";
-import { StartscreenComponent } from "./startscreen/startscreen.component";
-import { FormComponent } from "./form/form.component";
+import { RouterOutlet, RouterModule, Router, NavigationEnd } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { NavbarComponent } from './navbar/navbar.component';
+import { CardContainerComponent } from './card-container/card-container.component';
+import { FormComponent } from './form/form.component';
+import { StartscreenComponent } from './startscreen/startscreen.component';
+import { HomeComponent } from './home/home.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, HomeComponent, CardContainerComponent, StartscreenComponent, FormComponent],
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    RouterModule,
+    CommonModule,
+    NavbarComponent,
+    CardContainerComponent,
+    FormComponent,
+    StartscreenComponent,
+    HomeComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'Mini_shop';
+export class AppComponent implements OnInit {
+  currentRoute: string = '';
 
-  NgOnInit(){
-    if (window.scrollY) {
-      window.scroll(0, 0); 
-    }
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url;
+      }
+    });
+  }
+
+  ngOnInit() {
+    window.scrollTo(0, 0);
+  }
+
+  isAuthRoute(): boolean {
+    return this.currentRoute === '/login' || 
+           this.currentRoute === '/register' || 
+           this.currentRoute === '/dashboard';
   }
 }

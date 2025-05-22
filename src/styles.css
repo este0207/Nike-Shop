@@ -6,6 +6,10 @@
     /* border: 1px solid red; */
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 body{
     font-family: "Karantina", system-ui;
     font-weight: 700;
@@ -16,6 +20,6 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     overflow-x: hidden;
-    /* overflow-y: hidden; */
+    overflow-y: hidden;
     padding-bottom: 10%;
 }

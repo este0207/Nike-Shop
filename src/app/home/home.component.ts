@@ -8,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  scrollTo(){
+    window.scrollTo(0,780);
+  }
 }

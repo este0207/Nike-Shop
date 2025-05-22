@@ -1,51 +1,213 @@
 <div class="form-container">
-    <form (ngSubmit)="onSubmit($event)" #loginForm="ngForm" class="form">
-      <h2>LOGIN</h2>
-      <div class="form-group">
-        <label for="Name">Name</label>
-        <input 
-          type="text" 
-          id="Name"
-          name="Name"
-          [(ngModel)]="Loginform.Name"
-          required
-          class="form-control">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2>{{ isLoginMode() ? 'Connexion' : 'Inscription' }}</h2>
+      <button class="toggle-mode-btn" (click)="toggleMode()">
+        {{ isLoginMode() ? 'Créer un compte' : 'Déjà un compte ?' }}
+      </button>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="alert alert-error">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ errorMessage() }}
       </div>
-      <div class="form-group">
-        <label for="Lastname">Lastname</label>
-        <input 
-          type="text" 
-          id="Lastname"
-          name="Lastname"
-          [(ngModel)]="Loginform.Lastname"
-          required
-          class="form-control">
+    }
+
+    @if (successMessage()) {
+      <div class="alert alert-success">
+        <i class="fas fa-check-circle"></i>
+        {{ successMessage() }}
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input 
-          type="email" 
-          id="email"
-          name="email"
-          [(ngModel)]="Loginform.email"
-          required
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="Password">Password</label>
-        <input 
-          type="password" 
-          id="Password"
-          name="Password"
-          [(ngModel)]="Loginform.Password"
-          required
-          class="form-control">
-      </div>
-  
-      <div class="form-actions">
-        <button type="submit" class="submit-btn">Se connecter</button>
-        <button type="button" (click)="resetForm()" class="reset-btn">Réinitialiser</button>
-      </div>
-    </form>
+    }
+
+    @if (isLoginMode()) {
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+            placeholder="votre@email.com">
+          @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+            <div class="error-message">
+              @if (loginForm.get('email')?.errors?.['required']) {
+                L'email est requis
+              } @else if (loginForm.get('email')?.errors?.['email']) {
+                Format d'email invalide
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <div class="password-input">
+            <input 
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              formControlName="password"
+              class="form-control"
+              [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+              placeholder="••••••••">
+            <button 
+              type="button" 
+              class="toggle-password"
+              (click)="showPassword = !showPassword">
+              <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+            </button>
+          </div>
+          @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+            <div class="error-message">
+              @if (loginForm.get('password')?.errors?.['required']) {
+                Le mot de passe est requis
+              } @else if (loginForm.get('password')?.errors?.['minlength']) {
+                Le mot de passe doit contenir au moins 6 caractères
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button 
+            type="submit" 
+            class="submit-btn" 
+            [disabled]="loginForm.invalid || isLoading()">
+            @if (isLoading()) {
+              <span class="loading-spinner"></span>
+            }
+            {{ isLoading() ? 'Connexion en cours...' : 'Se connecter' }}
+          </button>
+        </div>
+      </form>
+    } @else {
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form">
+        <div class="form-group">
+          <label for="name">Prénom</label>
+          <input 
+            type="text" 
+            id="name"
+            formControlName="name"
+            class="form-control"
+            [class.is-invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+            placeholder="Votre prénom">
+          @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+            <div class="error-message">
+              @if (registerForm.get('name')?.errors?.['required']) {
+                Le prénom est requis
+              } @else if (registerForm.get('name')?.errors?.['minlength']) {
+                Le prénom doit contenir au moins 2 caractères
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="lastname">Nom</label>
+          <input 
+            type="text" 
+            id="lastname"
+            formControlName="lastname"
+            class="form-control"
+            [class.is-invalid]="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched"
+            placeholder="Votre nom">
+          @if (registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched) {
+            <div class="error-message">
+              @if (registerForm.get('lastname')?.errors?.['required']) {
+                Le nom est requis
+              } @else if (registerForm.get('lastname')?.errors?.['minlength']) {
+                Le nom doit contenir au moins 2 caractères
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="register-email">Email</label>
+          <input 
+            type="email" 
+            id="register-email"
+            formControlName="email"
+            class="form-control"
+            [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+            placeholder="votre@email.com">
+          @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+            <div class="error-message">
+              @if (registerForm.get('email')?.errors?.['required']) {
+                L'email est requis
+              } @else if (registerForm.get('email')?.errors?.['email']) {
+                Format d'email invalide
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="register-password">Mot de passe</label>
+          <div class="password-input">
+            <input 
+              [type]="showPassword ? 'text' : 'password'"
+              id="register-password"
+              formControlName="password"
+              class="form-control"
+              [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+              placeholder="••••••••">
+            <button 
+              type="button" 
+              class="toggle-password"
+              (click)="showPassword = !showPassword">
+              <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+            </button>
+          </div>
+          @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+            <div class="error-message">
+              @if (registerForm.get('password')?.errors?.['required']) {
+                Le mot de passe est requis
+              } @else if (registerForm.get('password')?.errors?.['minlength']) {
+                Le mot de passe doit contenir au moins 6 caractères
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirmer le mot de passe</label>
+          <div class="password-input">
+            <input 
+              [type]="showPassword ? 'text' : 'password'"
+              id="confirm-password"
+              formControlName="confirmPassword"
+              class="form-control"
+              [class.is-invalid]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+              placeholder="••••••••">
+          </div>
+          @if (registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
+            <div class="error-message">
+              @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+                La confirmation du mot de passe est requise
+              } @else if (registerForm.errors?.['mismatch']) {
+                Les mots de passe ne correspondent pas
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button 
+            type="submit" 
+            class="submit-btn" 
+            [disabled]="registerForm.invalid || isLoading()">
+            @if (isLoading()) {
+              <span class="loading-spinner"></span>
+            }
+            {{ isLoading() ? 'Inscription en cours...' : 'S\'inscrire' }}
+          </button>
+        </div>
+      </form>
+    }
   </div>
+</div>
   

@@ -2,6 +2,13 @@
     <app-links logo="NIKE"></app-links>
     <div class="login">
         <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
-        <button (click)="showForm()">Login</button>
+        @if (!currentUser) {
+            <button (click)="showForm()">Login</button>
+        } @else {
+            <div class="user-info">
+                <span>{{ currentUser.name }} {{ currentUser.lastname }}</span>
+                <button (click)="logout()">Déconnexion</button>
+            </div>
+        }
     </div>
 </div>
