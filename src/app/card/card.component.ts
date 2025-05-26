@@ -1,5 +1,8 @@
 import { Component, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LikeBtnComponent } from "../like-btn/like-btn.component";
+import { CartService } from '../services/cart.service';
+import { Router } from '@angular/router';
 
 interface Product {
   id: number;
@@ -10,14 +13,16 @@ interface Product {
 
 @Component({
   selector: 'app-card',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, LikeBtnComponent],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
 export class CardComponent implements OnInit {
   title = input("")
   price = input("")
-  cardbg = input("")
+  cardbg = input("")  
+  productId = input<number>(0)
 
   product = signal<Product | null>(null)
 
@@ -26,10 +31,8 @@ export class CardComponent implements OnInit {
   }
 
   private loadProduct() {
-    // Pour l'instant, on utilise des données statiques
-    // Plus tard, on pourra charger depuis l'API
     this.product.set({
-      id: 1,
+      id: this.productId(),
       name: this.title(),
       price: parseFloat(this.price().replace('€', '')),
       imageUrl: this.cardbg()

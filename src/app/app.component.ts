@@ -19,7 +19,7 @@ import { HomeComponent } from './home/home.component';
     FormComponent,
     StartscreenComponent,
     HomeComponent
-  ],
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

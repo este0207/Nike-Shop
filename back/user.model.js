@@ -6,12 +6,9 @@ export class UserModel{
 
     async initTable() {
         try {
-            // Suppression de la table existante
-            await this.client.execute('DROP TABLE IF EXISTS user');
-            
             // Création de la nouvelle table
             await this.client.execute(`
-                CREATE TABLE user (
+                CREATE TABLE IF NOT EXISTS user (
                     id INT PRIMARY KEY AUTO_INCREMENT,
                     name TINYTEXT NOT NULL,
                     lastname TINYTEXT NOT NULL,
@@ -19,7 +16,7 @@ export class UserModel{
                     password TEXT NOT NULL
                 )
             `);
-            console.log("Table 'user' créée avec succès");
+            console.log("Table 'user' ouvert avec succès");
         } catch (error) {
             console.error("Erreur lors de l'initialisation de la table:", error);
             throw error;

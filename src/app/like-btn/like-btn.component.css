@@ -1,0 +1,9 @@
+p {
+    color: rgb(167, 167, 167);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+p.active {
+    color: red;
+}
